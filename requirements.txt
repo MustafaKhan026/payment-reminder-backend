@@ -10,6 +10,7 @@ python-dotenv
 
 # Validation
 pydantic>=2.0
+pydantic[email]
 
 # Authentication & Security
 passlib[bcrypt]
