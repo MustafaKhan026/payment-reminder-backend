@@ -18,7 +18,8 @@ def create_invoice(
 
     db_invoice = Invoice(
         **invoice.dict(),
-        user_id=user_id
+        user_id=user_id,
+        user_email=user.email
     )
 
     db.add(db_invoice)

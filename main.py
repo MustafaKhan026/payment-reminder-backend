@@ -3,6 +3,8 @@ from database import engine
 from models import Base
 from routes import users, invoices
 from fastapi.middleware.cors import CORSMiddleware
+from routes import admin
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -19,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(admin.router)
 app.include_router(users.router)
 app.include_router(invoices.router)
 

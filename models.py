@@ -26,3 +26,4 @@ class Invoice(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="invoices")
+    user_email = Column(String, nullable=False)

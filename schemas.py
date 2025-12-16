@@ -30,6 +30,14 @@ class UserResponse(BaseModel):
 
 # ---------- INVOICE ----------
 
+class InvoiceUser(BaseModel):
+    id: int
+    email: str
+
+    class Config:
+        from_attributes = True
+
+
 class InvoiceCreate(BaseModel):
     invoice_number: str
     customer_name: str
@@ -41,6 +49,11 @@ class InvoiceResponse(InvoiceCreate):
     id: int
     status: str
     user_id: int
+    invoice_number: str
+    customer_name: str
+    issue_date: date
+    due_date: date
+    user: InvoiceUser
 
     class Config:
         from_attributes = True
