@@ -1,5 +1,6 @@
-from pydantic import BaseModel,EmailStr
+from pydantic import BaseModel,EmailStr,Field
 from datetime import date
+from typing import Optional
 
 # ---------- USER ----------
 
@@ -7,7 +8,7 @@ from datetime import date
 class UserRegister(BaseModel):
     name: str
     email: EmailStr
-    password: str
+    password: str = Field(min_length=8, max_length=64)
     role: str = "user"
 
 
@@ -27,6 +28,10 @@ class UserResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
 
 # ---------- INVOICE ----------
 

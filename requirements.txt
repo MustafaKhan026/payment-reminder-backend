@@ -14,8 +14,7 @@ pydantic[email]
 
 # Authentication & Security
 passlib[bcrypt]
+bcrypt==3.2.2
 python-jose[cryptography]
 
-
-# Optional but recommended
 alembic

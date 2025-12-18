@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User,Invoice
-from schemas import UserResponse,InvoiceResponse
+from schemas import UserResponse,InvoiceResponse, UserUpdate
 from sqlalchemy.orm import joinedload
 from sqlalchemy import func, case
 from datetime import date, timedelta
@@ -129,5 +129,47 @@ def get_dashboard_data(db: Session = Depends(get_db)):
     }
     
     
+@router.put("/users/{user_id}")
+def update_user(
+    user_id: int,
+    data: UserUpdate,
+    db: Session = Depends(get_db)
+):
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # 🔄 Update name
+    if data.name is not None:
+        user.name = data.name
+
+    # 🔄 Update email (check uniqueness)
+    if data.email is not None:
+        existing = db.query(User).filter(
+            User.email == data.email,
+            User.id != user_id
+        ).first()
+
+        if existing:
+            raise HTTPException(
+                status_code=400,
+                detail="Email already in use"
+            )
+
+        user.email = data.email
+
+
+    db.commit()
+    db.refresh(user)
+
+    return {
+        "message": "User updated successfully",
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email
+        }
+    }
     
 
