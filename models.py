@@ -38,8 +38,8 @@ class Reminder(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     invoice_id = Column(Integer, ForeignKey("invoices.id"), nullable=False)
 
-    reminder_type = Column(String, default="email")  # email / whatsapp / sms
-    status = Column(String, default="sent")          # sent / failed / read / paid
+    reminder_type = Column(String, default="email")
+    status = Column(String, default="sent")
 
     sent_at = Column(DateTime(timezone=True), server_default=func.now())
 

@@ -81,3 +81,18 @@ class ReminderResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ReminderCreateResponse(BaseModel):
+    id: int
+    reminder_type: str
+    status: str
+    sent_at: datetime
+
+    user_id: int
+    user_email: str
+
+    invoice_id: int
+    invoice_number: str
+
+    class Config:
+        from_attributes = True
